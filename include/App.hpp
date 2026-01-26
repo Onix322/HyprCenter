@@ -22,5 +22,9 @@ public:
 
   void stop();
 
+  void set_app(GtkApplication *app);
+
+  GtkApplication *get_app();
+
   bool isRunning();
 };

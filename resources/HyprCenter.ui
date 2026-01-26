@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface domain="HyprCenter">
+  <!-- APPLICATION WINDOW -->
+  <object class="GtkApplicationWindow" id="application-window">
+    <property name="title">HyprCenter</property>
+    <property name="default-width">800</property>
+    <property name="default-height">500</property>
+    <child>
+
+      <!-- CONTAENER -->
+      <object class="GtkBox" id="main-container">
+        <property name="orientation">horizontal</property>
+        <property name="spacing">10</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+
+        <!-- LEFT SIDE -->
+        <child>
+          <object class="GtkBox" id="options">
+            <property name="orientation">vertical</property>
+            <property name="width-request">200</property>
+
+            <!-- BUTTONS -->
+            <child>
+              <object class="GtkButton" id="network-option">
+                <property name="label">Network</property>
+
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkButton" id="system-option">
+                <property name="label">System</property>
+
+              </object>
+            </child>
+
+          </object>
+        </child>
+
+        <!-- RIGHT SIDE-->
+        <child>
+           <object class="GtkBox" id="display">
+            <property name="hexpand">True</property>
+            <property name="vexpand">True</property>
+
+            <child>
+
+            </child>
+          </object>
+        </child>
+
+      </object>
+    </child>
+
+  </object>
+</interface>
