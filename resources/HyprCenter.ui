@@ -22,12 +22,6 @@
             <property name="width-request">200</property>
 
             <!-- BUTTONS -->
-            <child>
-              <object class="GtkButton" id="network-option">
-                <property name="label">Network</property>
-
-              </object>
-            </child>
 
             <child>
               <object class="GtkButton" id="system-option">
@@ -36,18 +30,29 @@
               </object>
             </child>
 
+            <child>
+              <object class="GtkButton" id="network-option">
+                <property name="label">Network</property>
+
+              </object>
+            </child>
+
+
           </object>
         </child>
 
-        <!-- RIGHT SIDE-->
+        <!-- CONTENT SIDE-->
         <child>
-           <object class="GtkBox" id="display">
+           <object class="GtkBox" id="display-container">
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
 
             <child>
-
+              <object class="GtkBox" id="content">
+                 
+              </object>
             </child>
+
           </object>
         </child>
 

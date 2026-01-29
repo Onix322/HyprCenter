@@ -1,0 +1,48 @@
+<object class="GtkBox" id="content">
+  <child>
+    <!-- System infos -->
+    <!-- RAM , ARHITECTURE, PROCESSOR, DM, WM, OS--> 
+
+    <child>
+      <object class="GtkLabel" id="greedings">
+        <property name="label">SYSTEM PAGE</property>
+      </object>
+    </child>
+    <!-- JUST TEMPORARY SOME GREEDINGS-->
+
+    <!-- ///// START OS -->
+    <child>
+      <object class="GtkGrid" id="operating-system">
+
+        <child>
+          <object class="GtkLabel" id="operating-system-distro">
+            <property name="label">Distro: </property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+
+      </object>
+    </child>
+    <!-- ///// END OS -->
+
+  </child>
+
+  <child>
+    <!-- Graphics -->
+    <!-- MONITORS, Graphics CARDs, -->
+  </child>
+
+  <child>
+    <!-- USER -->
+    <!-- name-->
+  </child>
+
+  <child>
+    <object class="GtkLabel" id="system-label">
+      <property name="label">System label infos</property>  
+    </object>
+  </child>
+</object>
