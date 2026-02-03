@@ -1,7 +1,8 @@
 #pragma once
-#include "include/UserInterface.hpp"
+#include <UserInterface.hpp>
 #include <map>
 #include <mutex>
+#include <string>
 
 //  Role:
 //  ui regsitration
@@ -13,18 +14,13 @@ private:
   static std::mutex mtx;
   static UserInterfaceProvider *instance_ptr;
 
-  std::map<std::string, UserInterface> _user_interface_container;
+  std::map<std::string, UserInterface *> _user_interface_container;
 
   UserInterfaceProvider() {
-    _user_interface_container = std::map<std::string, UserInterface>();
+    _user_interface_container = std::map<std::string, UserInterface *>();
   }
 
 public:
-  void register_ui(UserInterface *ui) {
-
-  };
-  UserInterface *get_ui_by_name(std::string ui_name) { return nullptr; };
-
   static UserInterfaceProvider *get_instance() {
     std::lock_guard<std::mutex> lock_thread(mtx);
     if (instance_ptr == nullptr) {
@@ -32,4 +28,10 @@ public:
     }
     return instance_ptr;
   }
+
+  void register_ui(UserInterface *ui);
+
+  UserInterface *get_ui_by_name(std::string ui_name);
+
+  std::map<std::string, UserInterface *> get_all_ui();
 };

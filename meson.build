@@ -11,15 +11,12 @@ adwaita_dep = dependency('libadwaita-1')
 hyprlang_dep = dependency('hyprlang')
 
 sources = files(
+  'content/system-ui/system.cpp',
   'src/App.cpp',
   'src/DisplayManager.cpp',
-  'main.cpp',
+  'src/PluginScanner.cpp',
+  'src/UserInterfaceProvider.cpp',
 )
 
-executable(
-  'hyprcenter',
-  sources,
-  dependencies: [gtk_dep, adwaita_dep, hyprlang_dep],
-  include_directories: 'include',
-  install: true,
-)
+subdir('src')
+subdir('tests')

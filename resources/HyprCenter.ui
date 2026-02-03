@@ -17,26 +17,11 @@
 
         <!-- LEFT SIDE -->
         <child>
-          <object class="GtkBox" id="options">
+          <object class="GtkBox" id="options_container">
             <property name="orientation">vertical</property>
             <property name="width-request">200</property>
 
             <!-- BUTTONS -->
-
-            <child>
-              <object class="GtkButton" id="system-option">
-                <property name="label">System</property>
-
-              </object>
-            </child>
-
-            <child>
-              <object class="GtkButton" id="network-option">
-                <property name="label">Network</property>
-
-              </object>
-            </child>
-
 
           </object>
         </child>

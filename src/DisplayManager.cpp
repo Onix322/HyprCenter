@@ -36,7 +36,7 @@ void DisplayManager::show_ui(UserInterface *ui) {
   GObject *container_content = gtk_builder_get_object(builder, "content");
 
   gtk_box_remove(GTK_BOX(app_container_obj), GTK_WIDGET(container_content));
-  gtk_box_append(GTK_BOX(app_container_obj), ui_found->get_widget());
+  gtk_box_append(GTK_BOX(app_container_obj), ui_found->get_content());
 
   this->_current_ui = ui_found;
 }
