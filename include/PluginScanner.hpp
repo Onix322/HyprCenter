@@ -23,5 +23,5 @@ public:
   }
 
   // returns a string with paths found in directory
-  std::vector<std::string> scan_dir(fs::path &dir_path);
+  std::vector<std::filesystem::path> scan_dir(fs::path &dir_path);
 };
