@@ -18,10 +18,12 @@ private:
 public:
   App(UserInterfaceProvider *ui_provider) { _ui_provider = ui_provider; };
 
-  App(App &&) = default;
-  App(const App &) = default;
-  App &operator=(App &&) = default;
-  App &operator=(const App &) = default;
+  // move
+  App(App &&) = delete;
+  // copy
+  App(const App &) = delete;
+  App &operator=(App &&) = delete;
+  App &operator=(const App &) = delete;
   ~App() = default;
 
   void start();

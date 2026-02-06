@@ -7,6 +7,15 @@ namespace fs = std::filesystem;
 PluginScanner *PluginScanner::instance = nullptr;
 std::mutex PluginScanner::mtx;
 PluginScanner::PluginScanner() {}
+
+PluginScanner *PluginScanner::get_instance() {
+  if (nullptr == instance) {
+    std::lock_guard<std::mutex> lock(mtx);
+    instance = new PluginScanner();
+    return instance;
+  }
+  return instance;
+}
 std::vector<std::filesystem::path> PluginScanner::scan_dir(fs::path &dir_path) {
 
   std::vector<std::filesystem::path> paths;

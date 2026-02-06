@@ -21,13 +21,7 @@ private:
   }
 
 public:
-  static UserInterfaceProvider *get_instance() {
-    std::lock_guard<std::mutex> lock_thread(mtx);
-    if (instance_ptr == nullptr) {
-      instance_ptr = new UserInterfaceProvider();
-    }
-    return instance_ptr;
-  }
+  static UserInterfaceProvider *get_instance();
 
   void register_ui(UserInterface *ui);
 

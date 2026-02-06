@@ -13,14 +13,7 @@ private:
   static PluginScanner *instance;
 
 public:
-  static PluginScanner *get_instance() {
-    if (nullptr == instance) {
-      std::lock_guard<std::mutex> lock(mtx);
-      instance = new PluginScanner();
-      return instance;
-    }
-    return instance;
-  }
+  static PluginScanner *get_instance();
 
   // returns a string with paths found in directory
   std::vector<std::filesystem::path> scan_dir(fs::path &dir_path);

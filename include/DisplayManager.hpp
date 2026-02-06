@@ -24,8 +24,10 @@ private:
   };
 
 public:
-  DisplayManager(DisplayManager &&) = delete;
+  DisplayManager(const DisplayManager &) = delete;
   DisplayManager &operator=(const DisplayManager &) = delete;
+  DisplayManager(DisplayManager &&) = delete;
+  DisplayManager &operator=(DisplayManager &&) = delete;
   ~DisplayManager() = default;
 
   static void init(App *application, UserInterfaceProvider *ui_provicer);

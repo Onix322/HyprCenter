@@ -4,6 +4,14 @@
 std::mutex UserInterfaceProvider::mtx;
 UserInterfaceProvider *UserInterfaceProvider::instance_ptr = nullptr;
 
+UserInterfaceProvider *UserInterfaceProvider::get_instance() {
+  std::lock_guard<std::mutex> lock_thread(mtx);
+  if (instance_ptr == nullptr) {
+    instance_ptr = new UserInterfaceProvider();
+  }
+  return instance_ptr;
+}
+
 void UserInterfaceProvider::register_ui(UserInterface *ui) {
   _user_interface_container.insert_or_assign(ui->get_name(), ui);
 };
