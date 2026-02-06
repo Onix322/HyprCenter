@@ -1,3 +1,4 @@
+<interface>
 <object class="GtkBox" id="content">
   <child>
     <!-- System infos -->
@@ -46,3 +47,4 @@
     </object>
   </child>
 </object>
+</interface>

@@ -11,9 +11,9 @@ adwaita_dep = dependency('libadwaita-1')
 hyprlang_dep = dependency('hyprlang')
 
 sources = files(
-  'content/system-ui/system.cpp',
   'src/App.cpp',
   'src/DisplayManager.cpp',
+  'src/PluginLoader.cpp',
   'src/PluginScanner.cpp',
   'src/UserInterfaceProvider.cpp',
 )

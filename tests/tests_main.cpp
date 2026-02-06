@@ -1,3 +1,5 @@
+#include "PluginLoader.hpp"
+#include "UserInterfaceProvider.hpp"
 #include <PluginScanner.hpp>
 #include <filesystem>
 #include <iostream>
@@ -32,8 +34,6 @@ template <typename T> bool equality_arrays(T arr1, T arr2) {
 // TESTS
 void test_PluginScanner_scan_dir_func(PluginScanner *instance) {
 
-  std::cout << "TESTING PluginScanner->scan_dir()" << std::endl;
-
   // PREP
   std::filesystem::path path("./tests/test_plugins_scanner");
 
@@ -50,6 +50,21 @@ void test_PluginScanner_scan_dir_func(PluginScanner *instance) {
              "TEST PluginScanner->scan_dir");
 }
 
+void test_PluginLoader_load_one_plugin(PluginLoader *instance) {
+  // PREP
+
+  std::filesystem::path path =
+      std::filesystem::path(std::getenv("HOME")) /
+      "Documents/projects/hyprcenter/libs/system-info-ui/build" /
+      "libhyprcenter-system-info-ext.so";
+
+  // EXPECTED
+  // bool result = true;
+
+  // OUTPUT
+  instance->load_plugin(path.lexically_normal());
+}
+
 // TESTING AREA
 int main() {
 
@@ -57,9 +72,15 @@ int main() {
 
   // INIT AREA
   PluginScanner *plugin_scanner_instance = PluginScanner::get_instance();
+
+  UserInterfaceProvider *ui_provider = UserInterfaceProvider::get_instance();
+
+  PluginLoader::init(ui_provider);
+  PluginLoader *plugin_loader_instance = PluginLoader::get_instance();
   //
   // TEST AREA
   test_PluginScanner_scan_dir_func(plugin_scanner_instance);
+  test_PluginLoader_load_one_plugin(plugin_loader_instance);
 
   return 0;
 }

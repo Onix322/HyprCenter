@@ -1,5 +1,6 @@
 #include <PluginScanner.hpp>
 #include <filesystem>
+#include <iostream>
 #include <unistd.h>
 #include <vector>
 
@@ -16,12 +17,15 @@ PluginScanner *PluginScanner::get_instance() {
   }
   return instance;
 }
+
 std::vector<std::filesystem::path> PluginScanner::scan_dir(fs::path &dir_path) {
 
   std::vector<std::filesystem::path> paths;
 
   for (auto dir_entry : fs::recursive_directory_iterator(dir_path)) {
-    if (!dir_entry.is_directory()) {
+    if (!dir_entry.is_directory() &&
+        !dir_entry.path().extension().compare(".so")) {
+      std::cout << dir_entry.path().string() << std::endl;
       paths.push_back(dir_entry.path());
     }
   }
