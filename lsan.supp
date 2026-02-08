@@ -1,0 +1,8 @@
+leak:libfontconfig.so
+leak:libglib-2.0.so
+leak:libgio-2.0.so
+leak:libgtk-4.so
+leak:libgobject-2.0.so
+leak:libpango-1.0.so
+leak:libcairo.so
+leak:libadwaita-1.so

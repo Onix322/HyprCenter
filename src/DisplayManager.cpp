@@ -1,44 +1,33 @@
-#include "App.hpp"
 #include "UserInterface.hpp"
-#include "glib-object.h"
 #include "gtk/gtk.h"
 #include <DisplayManager.hpp>
-#include <stdexcept>
 
 std::mutex DisplayManager::mtx;
 DisplayManager *DisplayManager::instance_ptr = nullptr;
 
-void DisplayManager::init(App *application,
-                          UserInterfaceProvider *ui_provicer) {
+DisplayManager *DisplayManager::get_instance() {
   std::lock_guard<std::mutex> lock(mtx);
   if (instance_ptr == nullptr) {
-    instance_ptr = new DisplayManager(application, ui_provicer);
-  }
-}
-
-DisplayManager *DisplayManager::get_instance() {
-  if (instance_ptr == nullptr) {
-    throw new std::runtime_error(
-        "No instance initialized. Use DisplayManager.init() first and then "
-        "call get_instance");
+    instance_ptr = new DisplayManager();
   }
   return instance_ptr;
 }
 
-void DisplayManager::show_ui(UserInterface *ui) {
+void DisplayManager::show_ui(GtkBuilder *builder, UserInterface *ui) {
+  if (this->_current_ui == ui)
+    return;
 
-  UserInterface *ui_found = this->_ui_provider->get_ui_by_name(ui->get_name());
+  GtkStack *app_container_obj =
+      GTK_STACK(gtk_builder_get_object(builder, "display-container"));
 
-  GtkBuilder *builder = _application->get_builder();
-  // do something with ui_found
-  GObject *app_container_obj =
-      gtk_builder_get_object(builder, "display-container");
-  GObject *container_content = gtk_builder_get_object(builder, "content");
+  if (gtk_widget_get_parent(ui->get_content()) == nullptr) {
+    gtk_stack_add_named(app_container_obj, GTK_WIDGET(ui->get_content()),
+                        ui->get_name().c_str());
+  }
 
-  gtk_box_remove(GTK_BOX(app_container_obj), GTK_WIDGET(container_content));
-  gtk_box_append(GTK_BOX(app_container_obj), ui_found->get_content());
+  gtk_stack_set_visible_child(app_container_obj, ui->get_content());
 
-  this->_current_ui = ui_found;
+  this->_current_ui = ui;
 }
 
-UserInterface *DisplayManager::get_current_ui() { return nullptr; }
+UserInterface *DisplayManager::get_current_ui() { return _current_ui; }

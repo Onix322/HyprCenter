@@ -1,6 +1,5 @@
 #pragma once
 
-#include "App.hpp"
 #include <UserInterface.hpp>
 #include <UserInterfaceProvider.hpp>
 
@@ -14,14 +13,9 @@ private:
   static DisplayManager *instance_ptr;
   static std::mutex mtx;
 
-  App *_application;
   UserInterface *_current_ui;
-  UserInterfaceProvider *_ui_provider;
 
-  DisplayManager(App *application, UserInterfaceProvider *ui_provider) {
-    _application = application;
-    _ui_provider = ui_provider;
-  };
+  DisplayManager() {};
 
 public:
   DisplayManager(const DisplayManager &) = delete;
@@ -30,12 +24,10 @@ public:
   DisplayManager &operator=(DisplayManager &&) = delete;
   ~DisplayManager() = default;
 
-  static void init(App *application, UserInterfaceProvider *ui_provicer);
-
   static DisplayManager *get_instance();
 
   // it will show / change the ui displayed in "display-container"
-  void show_ui(UserInterface *ui);
+  void show_ui(GtkBuilder *builder, UserInterface *ui);
 
   UserInterface *get_current_ui();
 };

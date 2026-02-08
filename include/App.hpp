@@ -1,5 +1,6 @@
 #pragma once
 
+#include "DisplayManager.hpp"
 #include "UserInterfaceProvider.hpp"
 #include <gtk-4.0/gtk/gtk.h>
 
@@ -8,15 +9,18 @@ class App {
 
 private:
   GtkApplication *_app;
-  GtkBuilder *_buidler;
   UserInterfaceProvider *_ui_provider;
+  DisplayManager *_display_manager;
   bool _running;
 
   bool verify_window() { return _app != NULL; }
   App();
 
 public:
-  App(UserInterfaceProvider *ui_provider) { _ui_provider = ui_provider; };
+  App(DisplayManager *display_manager, UserInterfaceProvider *ui_provider) {
+    _display_manager = display_manager;
+    _ui_provider = ui_provider;
+  };
 
   // move
   App(App &&) = delete;
@@ -30,13 +34,7 @@ public:
 
   void stop();
 
-  void set_app(GtkApplication *app);
-
-  void set_builder(GtkBuilder *builder);
-
-  GtkBuilder *get_builder();
-
-  GtkApplication *get_app();
+  DisplayManager *get_display_manager();
 
   UserInterfaceProvider *get_ui_provider();
 

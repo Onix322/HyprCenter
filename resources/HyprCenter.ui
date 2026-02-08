@@ -28,7 +28,7 @@
 
         <!-- CONTENT SIDE-->
         <child>
-           <object class="GtkBox" id="display-container">
+           <object class="GtkStack" id="display-container">
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
 

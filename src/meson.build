@@ -1,5 +1,3 @@
-sources
-
 executable(
   'hyprcenter',
   [sources, './main.cpp'],

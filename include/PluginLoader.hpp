@@ -1,6 +1,7 @@
 #pragma once
 #include "UserInterfaceProvider.hpp"
 #include <filesystem>
+#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -23,7 +24,7 @@ public:
   static void init(UserInterfaceProvider *ui_provider);
   static PluginLoader *get_instance();
 
-  void load_plugins();
+  bool load_plugin_array(std::vector<fs::path> &dir_path);
 
-  void load_plugin(fs::path path);
+  bool load_plugin(fs::path path);
 };

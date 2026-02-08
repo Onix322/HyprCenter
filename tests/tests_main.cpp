@@ -59,10 +59,12 @@ void test_PluginLoader_load_one_plugin(PluginLoader *instance) {
       "libhyprcenter-system-info-ext.so";
 
   // EXPECTED
-  // bool result = true;
+  bool expected = true;
 
   // OUTPUT
-  instance->load_plugin(path.lexically_normal());
+  bool output = instance->load_plugin(path);
+
+  LOG_RESULT(expected == output, "TEST PluginLoader->load_plugin")
 }
 
 // TESTING AREA
@@ -77,10 +79,15 @@ int main() {
 
   PluginLoader::init(ui_provider);
   PluginLoader *plugin_loader_instance = PluginLoader::get_instance();
+
   //
   // TEST AREA
   test_PluginScanner_scan_dir_func(plugin_scanner_instance);
   test_PluginLoader_load_one_plugin(plugin_loader_instance);
+
+  delete plugin_scanner_instance;
+  delete ui_provider;
+  delete plugin_loader_instance;
 
   return 0;
 }
