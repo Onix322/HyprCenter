@@ -21,14 +21,12 @@ struct DisplayUiDetailsToHandle {
 
 DisplayUiDetailsToHandle *details = new DisplayUiDetailsToHandle();
 
-void handle_display_ui(GtkButton *button, gpointer user_data) {
-
+void handle_switching_display_ui(GtkButton *button, gpointer user_data) {
   UserInterface *ui = (UserInterface *)user_data;
   details->display_manager->show_ui(details->app_builder, ui);
 }
 
 void init_plugins(UserInterfaceProvider *ui_provider) {
-
   PluginScanner *scanner = PluginScanner::get_instance();
   PluginLoader::init(ui_provider);
   PluginLoader *loader = PluginLoader::get_instance();
@@ -38,7 +36,23 @@ void init_plugins(UserInterfaceProvider *ui_provider) {
   loader->load_plugin_array(paths);
 }
 
-void init_app_ui(GtkApplication *gtk_app, gpointer app_pointer) {
+void init_ui_elements(UserInterfaceProvider *ui_provider) {
+  GtkBox *options_container = GTK_BOX(
+      gtk_builder_get_object(details->app_builder, "options_container"));
+
+  auto all_ui = ui_provider->get_all_ui();
+
+  for (auto ui_entry : all_ui) {
+    GtkWidget *button =
+        gtk_button_new_with_label(ui_entry.second->get_button_name().c_str());
+    gtk_box_append(options_container, button);
+
+    g_signal_connect(button, "clicked", G_CALLBACK(handle_switching_display_ui),
+                     ui_entry.second);
+  }
+}
+
+void init_gui(GtkApplication *gtk_app, gpointer app_pointer) {
 
   // CREATING APP UI
   GtkBuilder *builder = gtk_builder_new_from_file("resources/HyprCenter.ui");
@@ -47,24 +61,8 @@ void init_app_ui(GtkApplication *gtk_app, gpointer app_pointer) {
   details->display_manager = app->get_display_manager();
   details->app_builder = builder;
 
-  // REGISTERING BUTTONS AND UI
-  // ui
   init_plugins(app->get_ui_provider());
-  // buttons
-  GtkBox *options_container =
-      GTK_BOX(gtk_builder_get_object(builder, "options_container"));
-
-  auto all_ui = app->get_ui_provider()->get_all_ui();
-
-  for (auto ui_entry : all_ui) {
-
-    GtkWidget *button =
-        gtk_button_new_with_label(ui_entry.second->get_button_name().c_str());
-    gtk_box_append(options_container, button);
-
-    g_signal_connect(button, "clicked", G_CALLBACK(handle_display_ui),
-                     ui_entry.second);
-  }
+  init_ui_elements(app->get_ui_provider());
 
   // GETTING WINDOW
   GtkApplicationWindow *app_window = GTK_APPLICATION_WINDOW(
@@ -81,7 +79,7 @@ void App::start() {
   this->_app =
       gtk_application_new("io.github.hyprcenter", G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(_app, "activate", G_CALLBACK(init_app_ui), this);
+  g_signal_connect(_app, "activate", G_CALLBACK(init_gui), this);
 
   int status = g_application_run(G_APPLICATION(_app), 0, nullptr);
 
