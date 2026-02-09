@@ -9,9 +9,21 @@
 #include "gtk/gtk.h"
 #include "gtk/gtkshortcut.h"
 #include <App.hpp>
+#include <filesystem>
+#include <iostream>
 #include <vector>
 
-App::App() : _app(nullptr), _running(false) {}
+App *App::_instance = nullptr;
+std::mutex App::mtx;
+
+void App::init(DisplayManager *display_manager,
+               UserInterfaceProvider *ui_provider) {
+  if (_instance == nullptr) {
+    _instance = new App(display_manager, ui_provider);
+  }
+}
+
+App *App::get_instance() { return _instance; }
 
 // used to send more data to 'handle_display_ui' func
 struct DisplayUiDetailsToHandle {
@@ -31,14 +43,34 @@ void init_plugins(UserInterfaceProvider *ui_provider) {
   PluginLoader::init(ui_provider);
   PluginLoader *loader = PluginLoader::get_instance();
 
-  fs::path location("./libs");
-  std::vector<fs::path> paths = scanner->scan_dir(location);
+  fs::path plugins_dir("./plugins");
+  fs::path usr_dir("/usr/share/hyprcenter/plugins");
+  fs::path config_dir(
+      std::string(g_get_user_config_dir()).append("/hyprcenter/plugins"));
+
+  // order matters for override
+  std::vector<fs::path> locations = {
+      plugins_dir,
+      usr_dir,
+      config_dir,
+  };
+
+  std::vector<fs::path> paths;
+
+  for (fs::path p : locations) {
+
+    std::cout << p << std::endl;
+    if (!fs::exists(p))
+      continue;
+    paths = scanner->scan_dir(p);
+  }
+
   loader->load_plugin_array(paths);
 }
 
 void init_ui_elements(UserInterfaceProvider *ui_provider) {
   GtkBox *options_container = GTK_BOX(
-      gtk_builder_get_object(details->app_builder, "options_container"));
+      gtk_builder_get_object(details->app_builder, "options-container"));
 
   auto all_ui = ui_provider->get_all_ui();
 
@@ -76,18 +108,18 @@ void init_gui(GtkApplication *gtk_app, gpointer app_pointer) {
 
 // first method called
 void App::start() {
-  this->_app =
+  this->_gtk_app =
       gtk_application_new("io.github.hyprcenter", G_APPLICATION_DEFAULT_FLAGS);
 
-  g_signal_connect(_app, "activate", G_CALLBACK(init_gui), this);
+  g_signal_connect(_gtk_app, "activate", G_CALLBACK(init_gui), this);
 
-  int status = g_application_run(G_APPLICATION(_app), 0, nullptr);
+  int status = g_application_run(G_APPLICATION(_gtk_app), 0, nullptr);
 
   this->_running = status == 0;
 }
 
 void App::stop() {
-  g_application_quit(G_APPLICATION(_app));
+  g_application_quit(G_APPLICATION(_gtk_app));
   delete details;
   details = nullptr;
   this->_running = false;

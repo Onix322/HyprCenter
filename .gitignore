@@ -98,5 +98,5 @@ build.ninja
 compile_commands.json
 .cache
 .git
-libs/
+plugins/
 # End of https://www.toptal.com/developers/gitignore/api/c++,c,meson

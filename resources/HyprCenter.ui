@@ -14,12 +14,24 @@
         <property name="margin-start">10</property>
         <property name="margin-end">10</property>
         <property name="margin-top">10</property>
-
+        
+               
         <!-- LEFT SIDE -->
         <child>
-          <object class="GtkBox" id="options_container">
+          <object class="GtkBox" id="options-container">
             <property name="orientation">vertical</property>
             <property name="width-request">200</property>
+            <child>
+              <object class="GtkLabel" id="title">
+                <property name="label"> HyprCenter </property>
+                <property name="margin-top">10</property>
+                <property name="margin-bottom">20</property>
+                <attributes>
+                  <attribute name="size" value="14576"/>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+            </child>
 
             <!-- BUTTONS -->
 
@@ -31,7 +43,10 @@
            <object class="GtkStack" id="display-container">
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
-
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
+            <property name="margin-start">20</property>
+            <property name="margin-end">20</property>
             <child>
               <object class="GtkBox" id="content">
                  

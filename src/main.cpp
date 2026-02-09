@@ -23,7 +23,8 @@ int main() {
   DisplayManager *display_manager = DisplayManager::get_instance();
   UserInterfaceProvider *ui_provider = UserInterfaceProvider::get_instance();
 
-  app = new App(display_manager, ui_provider);
+  App::init(display_manager, ui_provider);
+  app = App::get_instance();
 
   signal(SIGINT, handle_interuption);
   signal(SIGTERM, handle_interuption);
