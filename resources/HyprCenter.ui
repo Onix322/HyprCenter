@@ -23,7 +23,7 @@
             <property name="width-request">200</property>
             <child>
               <object class="GtkLabel" id="title">
-                <property name="label"> HyprCenter </property>
+                <property name="label">HyprCenter</property>
                 <property name="margin-top">10</property>
                 <property name="margin-bottom">20</property>
                 <attributes>

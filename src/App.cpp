@@ -43,14 +43,12 @@ void init_plugins(UserInterfaceProvider *ui_provider) {
   PluginLoader::init(ui_provider);
   PluginLoader *loader = PluginLoader::get_instance();
 
-  fs::path plugins_dir("./plugins");
   fs::path usr_dir("/usr/share/hyprcenter/plugins");
   fs::path config_dir(
       std::string(g_get_user_config_dir()).append("/hyprcenter/plugins"));
 
   // order matters for override
   std::vector<fs::path> locations = {
-      plugins_dir,
       usr_dir,
       config_dir,
   };

@@ -10,6 +10,8 @@ gtk_dep = dependency('gtk4')
 adwaita_dep = dependency('libadwaita-1')
 hyprlang_dep = dependency('hyprlang')
 
+inc = 'include'
+
 sources = files(
   'src/App.cpp',
   'src/DisplayManager.cpp',
